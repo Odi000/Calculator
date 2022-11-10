@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;700&family=Fjalla+One&display=swap');
+
 *, *::before, *::after{
     box-sizing: border-box;
     margin: 0;
@@ -22,28 +24,36 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--main-clr);
+    background-color: rgb(62, 62, 62);
 }
 
 button{
-    position: relative;
     background-color: inherit;
+
+    font-family: 'Fjalla One', sans-serif;
+    font-family: Dosis, sans-serif;
+
+    font-size: 3rem;
+    /* font-weight: 600; */
+    display: grid;
+    place-items: center;
     /* background-image: linear-gradient(145deg, #f0f0f0, #cacaca); */
     border: none;
     border-radius: 1rem;
     box-shadow: 
-    -2px -2px 6px rgba(255, 255, 255, 0.6),
-    2px 2px 6px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.2s;
+    -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.6),
+    0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.2);
+    transition: box-shadow 120ms, font-size 120ms;
 }
 
 button:active{
     /* background-image: linear-gradient(145deg,#cacaca,#f0f0f0); */
+    font-size: 2.8rem;
     box-shadow:
-    0  0 6px -6px rgba(255, 255, 255, 0.6),
-    0 0 6px -6px rgba(0, 0, 0, 0.2),
-    inset 2px 2px 6px rgba(0, 0, 0, 0.2),
-    inset -2px -2px 6px rgba(255, 255, 255, 0.6);
+    0  0 0.6rem -0.6rem rgba(255, 255, 255, 0.6),
+    0 0 0.6rem -0.6rem rgba(0, 0, 0, 0.2),
+    inset 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.2),
+    inset -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.6);
 } 
 
 .calculator{
@@ -52,15 +62,10 @@ button:active{
     background-color: var(--main-clr);
     border-radius: 1.4rem;
     padding: 3.2rem;
-    box-shadow:  
-    -15px -15px 30px rgba(255, 255, 255, 0.6),
-    15px 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.screen,
-.buttons{
-    /* width: 86%; */
-    margin: 0 auto;
+    box-shadow:
+    /* inset 0 0 0.3rem 0.2rem rgba(0, 0, 0, 0.5), */
+    /* -1.5rem -1.5rem 3rem rgba(255, 255, 255, 0.6), */
+    1.5rem 1.5rem 3rem rgba(0, 0, 0, 0.2);
 }
 
 .screen{
@@ -69,8 +74,8 @@ button:active{
     margin-bottom: 2.8rem;
     border-radius: 1rem;
     box-shadow: 
-    inset -5px -5px 12px rgba(255, 255, 255, 0.45),
-    inset 5px 5px 12px rgba(0, 0, 0, 0.3);
+    inset -0.5rem -0.5rem 1.2rem rgba(255, 255, 255, 0.45),
+    inset 0.5rem 0.5rem 1.2rem rgba(0, 0, 0, 0.3);
 }
 
 .buttons{
@@ -83,17 +88,17 @@ button:active{
 .buttons>:first-child,
 .buttons>:last-child{
     box-shadow: 
-    -2px -2px 6px rgba(255, 255, 255, 0.75),
-    2px 2px 6px rgba(0, 0, 0, 0.32);
+    -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.75),
+    0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.32);
 }
 
 .buttons>:first-child:active,
 .buttons>:last-child:active{
     box-shadow:
-    0  0 6px -6px rgba(255, 255, 255, 0.75),
-    0 0 6px -6px rgba(0, 0, 0, 0.32),
-    inset 2px 2px 6px rgba(0, 0, 0, 0.32),
-    inset -2px -2px 6px rgba(255, 255, 255, 0.75);
+    0 0 0.6rem -0.6rem rgba(255, 255, 255, 0.75),
+    0 0 0.6rem -0.6rem rgba(0, 0, 0, 0.32),
+    inset 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.32),
+    inset -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.75);
 }
 
 .buttons>:first-child{
