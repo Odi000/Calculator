@@ -101,6 +101,7 @@ button:active{
 
 .buttons>:first-child,
 .buttons>:last-child{
+    font-weight: 600;
     box-shadow: 
     -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.75),
     0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.32);
