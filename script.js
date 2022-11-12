@@ -7,18 +7,14 @@ const buttons = [...document.querySelectorAll('button')];
 buttons.forEach(button => {
 	button.addEventListener('click', () => {
 		const btnValue = button.textContent;
-		const actionBtn = /[C/*\-+=]/;
+		const actionBtn = /[C/*\-+=²√]/;
 		const expContent = expression.textContent;
-		const onlyZero = /^0$/;
-		const integer = /\d/;
+		const integer = /[\d√]/;
 		//Input rules
 		if (actionBtn.test(btnValue)) return engine[btnValue](btnValue);
 		if (expression.clientWidth > 290) return;
-		if (onlyZero.test(expContent) && integer.test(btnValue)) expression.textContent = '';
+		if (expContent === '0' && integer.test(btnValue)) expression.textContent = '';
 		if (btnValue === '.' && expContent.includes('.')) return;
-		if (/[²√]/.test(button.textContent) && expContent[expContent.length - 1] === '√') return;
-		if (button.id === '²' && expContent[expContent.length - 1] === '²') return;
-		if (btnValue === 'x²') return expression.textContent += button.id;
 		expression.textContent += btnValue;
 	})
 })
@@ -29,31 +25,65 @@ const engine = {
 		expression.textContent = '0';
 		evaluatedExp.textContent = '';	
 	},
-	'²': function(){},
-	'√': function(){},
+	'x²': function(){
+		operand = parseFloat(expression.textContent);
+		evaluatedExp.textContent = expression.textContent + '²';
+		expression.textContent = operand * operand;
+	},
+	'√': function(){
+		operand = parseFloat(expression.textContent);
+		evaluatedExp.textContent = '√' + expression.textContent;
+		expression.textContent = Math.sqrt(operand);
+	},
 	'/': function(){
 		if (!evaluatedExp.textContent){
-			evaluatedExp.textContent = expression.textContent + '/';
+			evaluatedExp.textContent = expression.textContent + ' / ';
 			expression.textContent = '0';
 		}
 	},
-	'*': function(){},
-	'-': function(){},
-	'+': function(){},
+	'*': function(){
+		if (!evaluatedExp.textContent){
+			evaluatedExp.textContent = expression.textContent + ' * ';
+			expression.textContent = '0';
+		}
+	},
+	'-': function(){
+		if (!evaluatedExp.textContent){
+			evaluatedExp.textContent = expression.textContent + ' - ';
+			expression.textContent = '0';
+		}
+	},
+	'+': function(){
+		if (!evaluatedExp.textContent){
+			evaluatedExp.textContent = expression.textContent + ' + ';
+			expression.textContent = '0';
+		}
+	},
 	'=': function(){
 		const allOprtrRegEx = /[/*\-+²√]/;
 		const oprtrRegEx = /[/*\-+]/;
-		const evalExpContent = evaluatedExp.textContent;
+		let evalExpContent = evaluatedExp.textContent;
 		let isNegative = false;
 
-		if (evalExpContent.textContent[0]){
+		if(!allOprtrRegEx.test(evalExpContent)) return;
+		
+		evalExpContent = evaluatedExp.textContent += expression.textContent;
+
+		if (evalExpContent[0] == '-'){
 			isNegative = true;
+			evalExpContent = evalExpContent.replace('-','');
 		}
 
-		if(!allOprtrRegEx.test(evalExpContent)) return;
+		const operands = evalExpContent.split(oprtrRegEx);
 
-		evaluatedExp.textContent += expression.textContent ;
-		const operands = evaluatedExp.textContent.split(oprtrRegEx);
+		for(let i=0; i < operands.length; i++){
+			if (i == 0 && isNegative){
+				operands[i] = parseFloat(operands[i]) * -1;
+				continue;
+			}
+			operands[i] = parseFloat(operands[i]);
+		}
+
 
 		console.log(operands)
 	},
