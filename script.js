@@ -11,7 +11,7 @@ buttons.forEach(button => {
 		const expContent = expression.textContent;
 		const integer = /[\d√]/;
 		//Input rules
-		if (actionBtn.test(btnValue)) return engine[btnValue](btnValue);
+		if (actionBtn.test(btnValue)) return engine[btnValue]();
 		if (expression.clientWidth > 290) return;
 		if (expContent === '0' && integer.test(btnValue)) expression.textContent = '';
 		if (btnValue === '.' && expContent.includes('.')) return;
@@ -35,39 +35,63 @@ const engine = {
 		evaluatedExp.textContent = '√' + expression.textContent;
 		expression.textContent = Math.sqrt(operand);
 	},
-	'/': function(){
-		if (!evaluatedExp.textContent){
-			evaluatedExp.textContent = expression.textContent + ' / ';
-			expression.textContent = '0';
+	'/': function(x, y){
+		const result = x / y;
+		if(result) return result;
+		if (evaluatedExp.textContent.split(' ').length === 3 &&
+			!evaluatedExp.textContent.split(' ')[2]){
+			return evaluatedExp.textContent = 
+			evaluatedExp.textContent.replace(/ [/*\-+] /,' / ');
 		}
+
+		evaluatedExp.textContent = expression.textContent + ' / ';
+		expression.textContent = '0';
 	},
-	'*': function(){
-		if (!evaluatedExp.textContent){
-			evaluatedExp.textContent = expression.textContent + ' * ';
-			expression.textContent = '0';
+	'*': function(x, y){
+		const result = x * y;
+		if(result) return result;
+		if (evaluatedExp.textContent.split(' ').length === 3 &&
+			!evaluatedExp.textContent.split(' ')[2]){
+			return evaluatedExp.textContent = 
+			evaluatedExp.textContent.replace(/ [/*\-+] /,' * ');
 		}
+
+		evaluatedExp.textContent = expression.textContent + ' * ';
+		expression.textContent = '0';
 	},
-	'-': function(){
-		if (!evaluatedExp.textContent){
-			evaluatedExp.textContent = expression.textContent + ' - ';
-			expression.textContent = '0';
+	'-': function(x, y){
+		const result = x - y;
+		if(result) return result;
+		if (evaluatedExp.textContent.split(' ').length === 3 &&
+			!evaluatedExp.textContent.split(' ')[2]){
+			return evaluatedExp.textContent =
+			evaluatedExp.textContent.replace(/ [/*\-+] /,' - ');
 		}
+
+		evaluatedExp.textContent = expression.textContent + ' - ';
+		expression.textContent = '0';
 	},
-	'+': function(){
-		if (!evaluatedExp.textContent){
-			evaluatedExp.textContent = expression.textContent + ' + ';
-			expression.textContent = '0';
+	'+': function(x, y){
+		const result = x + y;
+		if(result) return result;
+		if (evaluatedExp.textContent.split(' ').length === 3 &&
+			!evaluatedExp.textContent.split(' ')[2]){
+			return evaluatedExp.textContent = 
+			evaluatedExp.textContent.replace(/ [/*\-+] /,' + ');
 		}
+
+		evaluatedExp.textContent = expression.textContent + ' + ';
+		expression.textContent = '0';
 	},
 	'=': function(){
-		const allOprtrRegEx = /[/*\-+²√]/;
 		const oprtrRegEx = /[/*\-+]/;
 		let evalExpContent = evaluatedExp.textContent;
 		let isNegative = false;
 
-		if(!allOprtrRegEx.test(evalExpContent)) return;
+		if(!oprtrRegEx.test(evalExpContent)) return;
+		if(evaluatedExp.textContent.split(' ')[2]) return;
 		
-		evalExpContent = evaluatedExp.textContent += expression.textContent;
+		evalExpContent += expression.textContent;
 
 		if (evalExpContent[0] == '-'){
 			isNegative = true;
@@ -75,6 +99,10 @@ const engine = {
 		}
 
 		const operands = evalExpContent.split(oprtrRegEx);
+		const operators = evalExpContent.match(oprtrRegEx);
+
+
+		evaluatedExp.textContent += expression.textContent;
 
 		for(let i=0; i < operands.length; i++){
 			if (i == 0 && isNegative){
@@ -84,7 +112,9 @@ const engine = {
 			operands[i] = parseFloat(operands[i]);
 		}
 
+		console.log(evaluatedExp.textContent);
 
-		console.log(operands)
+		expression.textContent = engine[operators[0]](operands[0],operands[1]);
+
 	},
 }
