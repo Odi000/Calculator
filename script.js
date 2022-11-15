@@ -37,11 +37,13 @@ const engine = {
 	},
 	'/': function(x, y){
 		const result = x / y;
-		if(result) return result;
+		if(!isNaN(result)) return result;
 		if (evaluatedExp.textContent.split(' ').length === 3 &&
 			!evaluatedExp.textContent.split(' ')[2]){
-			return evaluatedExp.textContent = 
-			evaluatedExp.textContent.replace(/ [/*\-+] /,' / ');
+			const operand1 = evaluatedExp.textContent.split(' ')[0];
+			const operand2 = expression.textContent;
+			
+			engine['='](operand1,operand2);
 		}
 
 		evaluatedExp.textContent = expression.textContent + ' / ';
@@ -49,11 +51,13 @@ const engine = {
 	},
 	'*': function(x, y){
 		const result = x * y;
-		if(result) return result;
+		if(!isNaN(result)) return result;
 		if (evaluatedExp.textContent.split(' ').length === 3 &&
 			!evaluatedExp.textContent.split(' ')[2]){
-			return evaluatedExp.textContent = 
-			evaluatedExp.textContent.replace(/ [/*\-+] /,' * ');
+			const operand1 = evaluatedExp.textContent.split(' ')[0];
+			const operand2 = expression.textContent;
+			
+			engine['='](operand1,operand2);
 		}
 
 		evaluatedExp.textContent = expression.textContent + ' * ';
@@ -61,11 +65,13 @@ const engine = {
 	},
 	'-': function(x, y){
 		const result = x - y;
-		if(result) return result;
+		if(!isNaN(result)) return result;
 		if (evaluatedExp.textContent.split(' ').length === 3 &&
 			!evaluatedExp.textContent.split(' ')[2]){
-			return evaluatedExp.textContent =
-			evaluatedExp.textContent.replace(/ [/*\-+] /,' - ');
+			const operand1 = evaluatedExp.textContent.split(' ')[0];
+			const operand2 = expression.textContent;
+
+			engine['='](operand1,operand2);
 		}
 
 		evaluatedExp.textContent = expression.textContent + ' - ';
@@ -73,11 +79,13 @@ const engine = {
 	},
 	'+': function(x, y){
 		const result = x + y;
-		if(result) return result;
+		if(!isNaN(result)) return result;
 		if (evaluatedExp.textContent.split(' ').length === 3 &&
 			!evaluatedExp.textContent.split(' ')[2]){
-			return evaluatedExp.textContent = 
-			evaluatedExp.textContent.replace(/ [/*\-+] /,' + ');
+			const operand1 = evaluatedExp.textContent.split(' ')[0];
+			const operand2 = expression.textContent;
+			
+			engine['='](operand1,operand2);
 		}
 
 		evaluatedExp.textContent = expression.textContent + ' + ';
@@ -101,7 +109,6 @@ const engine = {
 		const operands = evalExpContent.split(oprtrRegEx);
 		const operators = evalExpContent.match(oprtrRegEx);
 
-
 		evaluatedExp.textContent += expression.textContent;
 
 		for(let i=0; i < operands.length; i++){
@@ -112,9 +119,6 @@ const engine = {
 			operands[i] = parseFloat(operands[i]);
 		}
 
-		console.log(evaluatedExp.textContent);
-
 		expression.textContent = engine[operators[0]](operands[0],operands[1]);
-
 	},
 }
