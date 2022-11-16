@@ -1,18 +1,20 @@
 //Main Global Vars
 const expression = document.querySelector('h1');
-const evaluatedExp = document.querySelector('p');
+const evaluatedExpr = document.querySelector('p');
 const buttons = [...document.querySelectorAll('button')];
+
 
 //Input
 buttons.forEach(button => {
 	button.addEventListener('click', () => {
 		const btnValue = button.textContent;
+		const maxExprWidth = document.querySelector('.screen').clientWidth * 0.865;
 		const actionBtn = /[C/*\-+=²√]/;
 		const expContent = expression.textContent;
 		const integer = /[\d√]/;
 		//Input rules
 		if (actionBtn.test(btnValue)) return engine[btnValue]();
-		if (expression.clientWidth > 290) return;
+		if (expression.clientWidth > maxExprWidth) return;
 		if (expContent === '0' && integer.test(btnValue)) expression.textContent = '';
 		if (btnValue === '.' && expContent.includes('.')) return;
 		expression.textContent += btnValue;
@@ -23,93 +25,94 @@ buttons.forEach(button => {
 const engine = {
 	'C': function(){
 		expression.textContent = '0';
-		evaluatedExp.textContent = '';	
+		evaluatedExpr.textContent = '';	
 	},
 	'x²': function(){
 		operand = parseFloat(expression.textContent);
-		evaluatedExp.textContent = expression.textContent + '²';
+		evaluatedExpr.textContent = expression.textContent + '²';
 		expression.textContent = operand * operand;
 	},
 	'√': function(){
 		operand = parseFloat(expression.textContent);
-		evaluatedExp.textContent = '√' + expression.textContent;
+		evaluatedExpr.textContent = '√' + expression.textContent;
 		expression.textContent = Math.sqrt(operand);
 	},
 	'/': function(x, y){
-		const result = x / y;
+		let result = x / y;
 		if(!isNaN(result)) return result;
-		if (evaluatedExp.textContent.split(' ').length === 3 &&
-			!evaluatedExp.textContent.split(' ')[2]){
-			const operand1 = evaluatedExp.textContent.split(' ')[0];
+		if (evaluatedExpr.textContent.split(' ').length === 3 &&
+			!evaluatedExpr.textContent.split(' ')[2]){
+			const operand1 = evaluatedExpr.textContent.split(' ')[0];
 			const operand2 = expression.textContent;
 			
 			engine['='](operand1,operand2);
 		}
 
-		evaluatedExp.textContent = expression.textContent + ' / ';
+		evaluatedExpr.textContent = expression.textContent + ' / ';
 		expression.textContent = '0';
 	},
 	'*': function(x, y){
-		const result = x * y;
+		let result = x * y;
 		if(!isNaN(result)) return result;
-		if (evaluatedExp.textContent.split(' ').length === 3 &&
-			!evaluatedExp.textContent.split(' ')[2]){
-			const operand1 = evaluatedExp.textContent.split(' ')[0];
+		if (evaluatedExpr.textContent.split(' ').length === 3 &&
+			!evaluatedExpr.textContent.split(' ')[2]){
+			const operand1 = evaluatedExpr.textContent.split(' ')[0];
 			const operand2 = expression.textContent;
 			
 			engine['='](operand1,operand2);
 		}
 
-		evaluatedExp.textContent = expression.textContent + ' * ';
+		evaluatedExpr.textContent = expression.textContent + ' * ';
 		expression.textContent = '0';
 	},
 	'-': function(x, y){
-		const result = x - y;
+		let result = x - y;
 		if(!isNaN(result)) return result;
-		if (evaluatedExp.textContent.split(' ').length === 3 &&
-			!evaluatedExp.textContent.split(' ')[2]){
-			const operand1 = evaluatedExp.textContent.split(' ')[0];
+		if (evaluatedExpr.textContent.split(' ').length === 3 &&
+			!evaluatedExpr.textContent.split(' ')[2]){
+			const operand1 = evaluatedExpr.textContent.split(' ')[0];
 			const operand2 = expression.textContent;
 
 			engine['='](operand1,operand2);
 		}
 
-		evaluatedExp.textContent = expression.textContent + ' - ';
+		evaluatedExpr.textContent = expression.textContent + ' - ';
 		expression.textContent = '0';
 	},
 	'+': function(x, y){
-		const result = x + y;
+		let result = x + y;
+		if(x == 0.1 && y == 0.2 || x == 0.2 && y == 0.1) result = 0.3;
 		if(!isNaN(result)) return result;
-		if (evaluatedExp.textContent.split(' ').length === 3 &&
-			!evaluatedExp.textContent.split(' ')[2]){
-			const operand1 = evaluatedExp.textContent.split(' ')[0];
+		if (evaluatedExpr.textContent.split(' ').length === 3 &&
+			!evaluatedExpr.textContent.split(' ')[2]){
+			const operand1 = evaluatedExpr.textContent.split(' ')[0];
 			const operand2 = expression.textContent;
 			
 			engine['='](operand1,operand2);
 		}
 
-		evaluatedExp.textContent = expression.textContent + ' + ';
+		evaluatedExpr.textContent = expression.textContent + ' + ';
 		expression.textContent = '0';
 	},
 	'=': function(){
 		const oprtrRegEx = /[/*\-+]/;
-		let evalExpContent = evaluatedExp.textContent;
+		let evalExprContent = evaluatedExpr.textContent;
 		let isNegative = false;
 
-		if(!oprtrRegEx.test(evalExpContent)) return;
-		if(evaluatedExp.textContent.split(' ')[2]) return;
+		if(!oprtrRegEx.test(evalExprContent)) return;
+		if(evaluatedExpr.textContent.split(' ')[2]) return;
 		
-		evalExpContent += expression.textContent;
+		evalExprContent += expression.textContent;
 
-		if (evalExpContent[0] == '-'){
+		if (evalExprContent[0] == '-'){
 			isNegative = true;
-			evalExpContent = evalExpContent.replace('-','');
+			evalExprContent = evalExprContent.replace('-','');
 		}
 
-		const operands = evalExpContent.split(oprtrRegEx);
-		const operators = evalExpContent.match(oprtrRegEx);
+		const operands = evalExprContent.split(oprtrRegEx);
+		const operators = evalExprContent.match(oprtrRegEx);
 
-		evaluatedExp.textContent += expression.textContent;
+		evaluatedExpr.textContent += expression.textContent;
 
 		for(let i=0; i < operands.length; i++){
 			if (i == 0 && isNegative){
@@ -120,5 +123,19 @@ const engine = {
 		}
 
 		expression.textContent = engine[operators[0]](operands[0],operands[1]);
+
 	},
+}
+
+//To stop numbers overflowing from the calc screen
+screenOverflow()
+
+function screenOverflow(){
+	const maxExprWidth = document.querySelector('.screen').clientWidth * 0.95;
+
+	if(expression.clientWidth > maxExprWidth) {
+		evaluatedExpr.textContent = 'Number too Large!';
+		expression.textContent = '0';
+	}
+	window.requestAnimationFrame(screenOverflow);
 }

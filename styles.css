@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;700&family=Fjalla+One&display=swap');
 
+@font-face {
+    font-family: digital-7;
+    src: url(./font/digital-7.ttf);
+}
+
 *, *::before, *::after{
     box-sizing: border-box;
     margin: 0;
@@ -11,6 +16,30 @@
     --red: rgba(248, 67, 57, 0.35);
     --green: rgba(56, 166, 54, 0.35);
     --blue: #2395F5;
+}
+
+@media (max-height: 582px){
+    :root{
+        font-size: 9px;
+    }
+}
+
+@media (max-height: 525px){
+    :root{
+        font-size: 8px;
+    }
+}
+
+@media (max-height: 467px){
+    :root{
+        font-size: 6px;
+    }
+}
+
+@media (max-width: 410px){
+    :root{
+        font-size: 9px;
+    }
 }
 
 body{
