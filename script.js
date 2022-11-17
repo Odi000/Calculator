@@ -35,17 +35,18 @@ const engine = {
 	'√': function(){
 		operand = parseFloat(expression.textContent);
 		evaluatedExpr.textContent = '√' + expression.textContent;
-		expression.textContent = Math.sqrt(operand);
+		let result = Math.sqrt(operand);
+		result *= 100000;
+		result = Number(result.toFixed());
+		result /= 100000;
+		expression.textContent = result;
 	},
 	'/': function(x, y){
 		let result = x / y;
 		if(!isNaN(result)) return result;
 		if (evaluatedExpr.textContent.split(' ').length === 3 &&
 			!evaluatedExpr.textContent.split(' ')[2]){
-			const operand1 = evaluatedExpr.textContent.split(' ')[0];
-			const operand2 = expression.textContent;
-			
-			engine['='](operand1,operand2);
+			engine['=']();
 		}
 
 		evaluatedExpr.textContent = expression.textContent + ' / ';
@@ -56,10 +57,7 @@ const engine = {
 		if(!isNaN(result)) return result;
 		if (evaluatedExpr.textContent.split(' ').length === 3 &&
 			!evaluatedExpr.textContent.split(' ')[2]){
-			const operand1 = evaluatedExpr.textContent.split(' ')[0];
-			const operand2 = expression.textContent;
-			
-			engine['='](operand1,operand2);
+			engine['=']();
 		}
 
 		evaluatedExpr.textContent = expression.textContent + ' * ';
@@ -70,10 +68,7 @@ const engine = {
 		if(!isNaN(result)) return result;
 		if (evaluatedExpr.textContent.split(' ').length === 3 &&
 			!evaluatedExpr.textContent.split(' ')[2]){
-			const operand1 = evaluatedExpr.textContent.split(' ')[0];
-			const operand2 = expression.textContent;
-
-			engine['='](operand1,operand2);
+			engine['=']();
 		}
 
 		evaluatedExpr.textContent = expression.textContent + ' - ';
@@ -81,14 +76,10 @@ const engine = {
 	},
 	'+': function(x, y){
 		let result = x + y;
-		if(x == 0.1 && y == 0.2 || x == 0.2 && y == 0.1) result = 0.3;
 		if(!isNaN(result)) return result;
 		if (evaluatedExpr.textContent.split(' ').length === 3 &&
 			!evaluatedExpr.textContent.split(' ')[2]){
-			const operand1 = evaluatedExpr.textContent.split(' ')[0];
-			const operand2 = expression.textContent;
-			
-			engine['='](operand1,operand2);
+			engine['=']();
 		}
 
 		evaluatedExpr.textContent = expression.textContent + ' + ';
@@ -122,20 +113,26 @@ const engine = {
 			operands[i] = parseFloat(operands[i]);
 		}
 
-		expression.textContent = engine[operators[0]](operands[0],operands[1]);
+		let result = engine[operators[0]](operands[0],operands[1]);
+		
+		result *= 100000;
+		result = Number(result.toFixed());
+		result /= 100000;
+
+		expression.textContent = result;
 
 	},
 }
 
 //To stop numbers overflowing from the calc screen
-screenOverflow()
+stopOverflow()
 
-function screenOverflow(){
+function stopOverflow(){
 	const maxExprWidth = document.querySelector('.screen').clientWidth * 0.95;
 
 	if(expression.clientWidth > maxExprWidth) {
 		evaluatedExpr.textContent = 'Number too Large!';
 		expression.textContent = '0';
 	}
-	window.requestAnimationFrame(screenOverflow);
+	window.requestAnimationFrame(stopOverflow);
 }
