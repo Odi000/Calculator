@@ -30,7 +30,11 @@ const engine = {
 	'x²': function(){
 		operand = parseFloat(expression.textContent);
 		evaluatedExpr.textContent = expression.textContent + '²';
-		expression.textContent = operand * operand;
+		let result = operand * operand;
+		result *= 100000;
+		result = Number(result.toFixed());
+		result /= 100000;
+		expression.textContent = result;
 	},
 	'√': function(){
 		operand = parseFloat(expression.textContent);
