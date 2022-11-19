@@ -52,7 +52,8 @@ section{
     height: inherit;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 100px;
     background-color: rgb(62, 62, 62);
 }
 
@@ -71,6 +72,7 @@ h1{
     margin: 0 1.4rem 0 auto;
     width: max-content;
 }
+
 
 button{
     background-color: inherit;
@@ -99,6 +101,7 @@ button:active{
 } 
 
 .calculator{
+    position: relative;
     width: 40rem;
     height: auto;
     background-color: var(--main-clr);
@@ -156,4 +159,72 @@ button:active{
 
 .span-2{
     grid-column: span 2;
+}
+
+/*-- Signature --*/
+
+h2{
+    position: absolute;
+    top: 12rem;
+    right: -48rem;
+    line-height: 11rem;
+    font-family: Dosis, sans-serif;
+    font-size: 6.4rem;
+    text-align: center;
+    color: rgb(62, 62, 62);
+    text-shadow: 
+    -0.3rem -0.3rem 0.3rem rgba(255, 255, 255, 0.12),
+    0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.22);
+}
+
+span{
+    display: inline-block;
+    height: 12rem;
+    width: 34.1rem;    
+    font-size: 8rem;
+    border: 2px solid;
+    border-radius: 1.6rem;
+    transition: box-shadow 0.2s;
+}
+
+span:hover{
+    box-shadow: 
+    -0.4rem -0.4rem 0.8rem rgba(255, 255, 255, 0.1),
+    0.4rem 0.4rem 0.8rem rgba(0, 0, 0, 0.2),
+    inset 0 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+span:active{
+    box-shadow:
+    -0.4rem -0.4rem 0.8rem rgba(255, 255, 255, 0.1),
+    0.4rem 0.4rem 0.8rem rgba(0, 0, 0, 0.2),
+    inset -0.4rem -0.4rem 0.8rem rgba(255, 255, 255, 0.1),
+    inset 0.4rem 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
+}
+
+a{
+    user-select: none;
+    color: inherit;
+    text-decoration: none;
+    transition: scale 0.2s;
+    text-shadow: 
+    -0.3rem -0.3rem 0.4rem rgba(255, 255, 255, 0.15),
+    0.3rem 0.3rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+span:active>a{
+    display: inline-block;
+    scale: 0.98;
+}
+
+h2>img{
+    width: 80px;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+    transition: transform 0.9s ease-out, scale 0.5s;
+}
+
+h2>img:hover{
+    transform: rotate(calc(360*2deg));
+    scale: 1.2;
 }
